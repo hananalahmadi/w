@@ -1,0 +1,97 @@
+---
+title: "Cancer in Saudi Arabia"
+---
+
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+
+# ![Pollution from satellite data.](pm.png){width=500px}
+
+library(readxl)
+library(sf)
+library(ggplot2)
+library(rgeoboundaries)
+library(rnaturalearth)
+library(dplyr)
+library(SpatialEpi)
+library(spdep)
+library(INLA)
+library(sp)
+library(Matrix)
+library(spData)
+library(leaflet)
+
+
+
+
+##############################
+# Get the map of Saudi Arabia
+##############################
+
+map <- ne_states(country = "Saudi Arabia", returnclass = "sf")
+map$name[1]="Eastern Province"
+map$name[2]="Northern Borders"
+map$name[3]="Al Jawf"
+map$name[4]="Najran"
+map$name[5]="Asir"
+map$name[6]="Jazan"
+map$name[7]="Tabuk"
+map$name[8]="Madinah"
+map$name[9]="Makkah"
+map$name[10]= "Riyadh"
+map$name[11]="Qassim"
+map$name[12]="Hail"
+map$name[13]="Al Bahah"
+map <- st_set_crs(map, 4326) #certain projection
+map <- map[order(map$name),] #alphabetically ordered
+#map<-map %>% select(name,geometry)
+
+# class(map)
+# map$name
+##################
+# Get the data
+##################
+
+data <- read.csv("data/fulldata.csv", header = T)
+data <- data[order(data$name),]
+
+#############################
+# Merge the data and the map
+#############################
+
+
+map <- map %>%
+  left_join(data, by = "name")
+
+
+
+# 
+# # Load necessary libraries
+library(leaflet)
+library(htmltools)
+# 
+# Create labels for the Cancer map
+labels_cancer <- sprintf("<strong>%s</strong><br/>Cancer Cases: %s",
+  map$name, map$Cancer) %>%
+  lapply(htmltools::HTML)
+
+# Create color palette for Cancer map
+pal_cancer <- colorNumeric(palette = "viridis", domain = map$Cancer)
+
+# First map - Cancer
+map1 <- leaflet(map) %>%
+  addTiles() %>%
+  addPolygons(
+    color = "grey", weight = 1,
+    fillColor = ~pal_cancer(Cancer), fillOpacity = 0.5,
+    highlightOptions = highlightOptions(weight = 4),
+    label = labels_cancer,
+    labelOptions = labelOptions(style = list("font-weight" = "normal", padding = "3px 8px"),
+                                textsize = "15px", direction = "auto")
+  ) %>%
+  addLegend(
+    pal = pal_cancer, values = ~Cancer, opacity = 0.5, title = "Cancer", position = "bottomright"
+  )
+map1
+
+```

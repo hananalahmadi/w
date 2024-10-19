@@ -1,0 +1,13 @@
+name: "my-website"
+navbar:
+  title: '<img src="noname.png" alt="Skyspatial" style="height: 100px; width: 100px;">' # Change height and width here to 150px or any size you prefer
+  left:
+    - text: "Cancer"
+      href: index.html
+    - text: "Diabetes"
+      href: about.html
+output:
+  html_document:
+    theme: flatly
+    highlight: textmate
+    css: styles.css
