@@ -116,7 +116,7 @@ Sorat Alardh is a pioneering startup that leverages Earth observation technology
 # cp -r _site/*
 # cp -r _site/*
 # git add .
-# git commit -m "I"
+# git commit -m "I3i"
 # git push -u origin main
 
 
