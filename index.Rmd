@@ -111,12 +111,11 @@ Sorat Alardh is a pioneering startup that leverages Earth observation technology
 # # Optionally display the plot in the R session
 # print(combined_plot)
 
-# cd ~/Desktop/Sky/MVP/MVPweb/MVP
+# cd ~/Desktop/Sky/webaite/w
 # git init
 # cp -r _site/*
-# cp -r _site/*
 # git add .
-# git commit -m "I3i"
+# git commit -m "I4i"
 # git push -u origin main
 
 
