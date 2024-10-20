@@ -1,97 +1,116 @@
 ---
-title: "Cancer in Saudi Arabia"
+title: "Empowering Health and Sustainability with Insights from Earth Observation"
 ---
 
 
-```{r , echo=FALSE, message=FALSE, warning=FALSE}
 
-# ![Pollution from satellite data.](pm.png){width=500px}
-
-library(readxl)
-library(sf)
-library(ggplot2)
-library(rgeoboundaries)
-library(rnaturalearth)
-library(dplyr)
-library(SpatialEpi)
-library(spdep)
-library(INLA)
-library(sp)
-library(Matrix)
-library(spData)
-library(leaflet)
+<br><br> <!-- Adds two line breaks to create space -->
 
 
+Sorat Alardh is a pioneering startup that leverages Earth observation technology to monitor environmental changes and assess their impact on public health. By combining satellite data with advanced statistical models, the platform provides real-time insights into pollution levels, temperature, and disease risks. Aimed at government agencies and healthcare organizations, Sorat Alardh helps decision-makers address environmental challenges, optimize resource management, and protect public health through data-driven strategies. With a focus on sustainability and innovation, the startup plays a key role in shaping a healthier and more sustainable future for Saudi Arabia and beyond.
+<br><br>
 
+![](sdata.pm4.gif){width=500px}
 
-##############################
-# Get the map of Saudi Arabia
-##############################
+```{r , echo=FALSE, message=FALSE, warning=FALSE,fig.width= 12, fig.height=8}
 
-map <- ne_states(country = "Saudi Arabia", returnclass = "sf")
-map$name[1]="Eastern Province"
-map$name[2]="Northern Borders"
-map$name[3]="Al Jawf"
-map$name[4]="Najran"
-map$name[5]="Asir"
-map$name[6]="Jazan"
-map$name[7]="Tabuk"
-map$name[8]="Madinah"
-map$name[9]="Makkah"
-map$name[10]= "Riyadh"
-map$name[11]="Qassim"
-map$name[12]="Hail"
-map$name[13]="Al Bahah"
-map <- st_set_crs(map, 4326) #certain projection
-map <- map[order(map$name),] #alphabetically ordered
-#map<-map %>% select(name,geometry)
-
-# class(map)
-# map$name
-##################
-# Get the data
-##################
-
-data <- read.csv("data/fulldata.csv", header = T)
-data <- data[order(data$name),]
-
-#############################
-# Merge the data and the map
-#############################
-
-
-map <- map %>%
-  left_join(data, by = "name")
-
-
-
+# # ![Pollution from satellite data.](pm.png){width=500px}
+# 
+# library(readxl)
+# library(sf)
+# library(ggplot2)
+# library(rgeoboundaries)
+# library(rnaturalearth)
+# library(dplyr)
+# library(SpatialEpi)
+# library(spdep)
+# library(INLA)
+# library(sp)
+# library(Matrix)
+# library(spData)
+# library(leaflet)
+# 
+# 
+# 
+# 
+# ##############################
+# # Get the map of Saudi Arabia
+# ##############################
+# 
+# map <- ne_states(country = "Saudi Arabia", returnclass = "sf")
+# map$name[1]="Eastern Province"
+# map$name[2]="Northern Borders"
+# map$name[3]="Al Jawf"
+# map$name[4]="Najran"
+# map$name[5]="Asir"
+# map$name[6]="Jazan"
+# map$name[7]="Tabuk"
+# map$name[8]="Madinah"
+# map$name[9]="Makkah"
+# map$name[10]= "Riyadh"
+# map$name[11]="Qassim"
+# map$name[12]="Hail"
+# map$name[13]="Al Bahah"
+# map <- st_set_crs(map, 4326) #certain projection
+# map <- map[order(map$name),] #alphabetically ordered
+# #map<-map %>% select(name,geometry)
+# 
+# # class(map)
+# # map$name
+# ##################
+# # Get the data
+# ##################
+# 
+# data <- read.csv("data/fulldata.csv", header = T)
+# data <- data[order(data$name),]
+# 
+# #############################
+# # Merge the data and the map
+# #############################
+# 
+# 
+# map <- map %>%
+#   left_join(data, by = "name")
 # 
 # # Load necessary libraries
-library(leaflet)
-library(htmltools)
+# library(ggplot2)
+# library(RColorBrewer)  # For the YlOrRd color palette
+# library(sf)            # For handling spatial data
+# library(patchwork)     # For arranging plots side by side
 # 
-# Create labels for the Cancer map
-labels_cancer <- sprintf("<strong>%s</strong><br/>Cancer Cases: %s",
-  map$name, map$Cancer) %>%
-  lapply(htmltools::HTML)
+# # Assuming 'map' is your data frame with spatial information in 'sf' format
+# 
+# # Create a ggplot map using geom_sf for spatial data
+# map_plot <- ggplot(map) +
+#   geom_sf(aes(fill = Cancer), color = NA, lwd = 0.2) +  # No boundary color
+#   scale_fill_distiller(palette = "YlOrRd", direction = 1, name = "Cancer") +  # Using YlOrRd palette
+#   theme_minimal() +  # Clean theme
+#   theme(
+#     axis.title = element_blank(),  # Remove axis titles
+#     axis.text = element_blank(),   # Remove axis text
+#     axis.ticks = element_blank(),  # Remove axis ticks
+#     plot.title = element_blank(),  # Remove plot title
+#     panel.grid = element_blank()   # Remove grid lines
+#   )
+# 
+# # Create the ggplot bar plot
+# bar_plot <- ggplot(map, aes(x = reorder(name, -Cancer), y = Cancer, fill = Cancer)) +
+#   geom_bar(stat = "identity", color = NA) +  # Remove borders around bars by setting color to NA
+#   scale_fill_distiller(palette = "YlOrRd", direction = 1, name = "Cancer") +  # Using YlOrRd palette
+#   theme_minimal() +  # Minimal theme with a white background
+#   theme(
+#     axis.text.x = element_text(angle = 90, hjust = 1, size = 10),  # Rotate x-axis labels for readability
+#     axis.title = element_blank(),  # Remove axis titles
+#     plot.title = element_blank(),  # Remove plot title
+#     panel.grid = element_blank()   # Remove grid lines
+#   )
+# 
+# # Arrange the two plots side by side
+# combined_plot <- map_plot + bar_plot 
+# 
+# # Optionally display the plot in the R session
+# print(combined_plot)
 
-# Create color palette for Cancer map
-pal_cancer <- colorNumeric(palette = "viridis", domain = map$Cancer)
 
-# First map - Cancer
-map1 <- leaflet(map) %>%
-  addTiles() %>%
-  addPolygons(
-    color = "grey", weight = 1,
-    fillColor = ~pal_cancer(Cancer), fillOpacity = 0.5,
-    highlightOptions = highlightOptions(weight = 4),
-    label = labels_cancer,
-    labelOptions = labelOptions(style = list("font-weight" = "normal", padding = "3px 8px"),
-                                textsize = "15px", direction = "auto")
-  ) %>%
-  addLegend(
-    pal = pal_cancer, values = ~Cancer, opacity = 0.5, title = "Cancer", position = "bottomright"
-  )
-map1
 
 ```

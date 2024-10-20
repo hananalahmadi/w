@@ -4,6 +4,8 @@ title: "Diabetes in Saudi Arabia"
 
 
 
+
+
 ```{r , echo=FALSE, message=FALSE, warning=FALSE}
 
 # ![Pollution from satellite data.](pm.png){width=500px}
@@ -71,7 +73,7 @@ labels_Diabetes <- sprintf("<strong>%s</strong><br/>Diabetes Cases: %s",
   lapply(htmltools::HTML)
 
 # Create color palette for Diabetes map
-pal_Diabetes <- colorNumeric(palette = "viridis", domain = map$Diabetes)
+pal_Diabetes <- colorNumeric(palette = "YlOrRd", domain = map$Diabetes)
 
 # First map - Diabetes
 map1 <- leaflet(map) %>%
