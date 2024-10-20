@@ -4,7 +4,7 @@ title: ""
 
 <br><br> <!-- Adds two line breaks to create space -->
 
-# Detection disease cluster
+# Detecting disease cluster
 <br><br> <!-- Adds two line breaks to create space -->
 
 Our platform enables the detection of disease clusters by integrating satellite data with disease occurrence records. Users can upload their own data and visualize disease risks in different regions. The tool provides insights into how environmental factors like $PM_{2.5}$ pollution affect public health and highlights regions at risk, helping decision-makers prioritize healthcare efforts.
