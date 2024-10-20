@@ -1,6 +1,6 @@
 name: "my-website"
 navbar:
-  title: '<img src="noname.png" alt="Skyspatial" style="height: 100px; width: 100px;">' # Change height and width here to 150px or any size you prefer
+  title: '<img src="images/noname.png" alt="Skyspatial" style="height: 150px; width: 150px;">'
   left:
     - text: "About"
       href: index.html
